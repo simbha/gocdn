@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Kullanıcı Paneli - Mesaj Listesi{% endblock %}
+{% block content %}
+    <div class="int" id='form'>
+        <h2 class="h2">Mesaj Listesi</h2>
+        <table width="100%" cellpadding="5" cellspacing="5">
+            <tr class="head">
+                <th>Konu</th>
+                <th>Başlık</th>
+                <th>Mesaj</th>
+            </tr>
+            {% for li in list %}
+                <tr class="{% cycle 'odd' 'even' %}">
+                    <td>{{ li.help_subject }}</td>
+                    <td>{{ li.help_title }}</td>
+                    <td>{{ li.help_content }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

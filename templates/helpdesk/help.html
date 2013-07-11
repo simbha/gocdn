@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}help Desk{% endblock %}
+{% block content %}
+
+
+   <div class="int" id='form'>
+       <h2 class="h2">Destek Formu</h2>
+       <form id="CdnForm" method="post" action="">
+           {% csrf_token %}
+           <ul>
+               {% include 'div_form.html' %}
+               <li><input type="submit" name='cdnsubmit' class="submit" value="Gönder"></li>
+           </ul>
+       </form>
+   </div>
+{% endblock %}

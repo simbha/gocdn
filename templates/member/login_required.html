@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block initial_content %}
+    <div id="main">
+        <div class="login"><h3>KULLANICI GİRİŞİ</h3></div>
+        <form method="post" action="{% url gostream_login %}">
+            {% csrf_token %}
+            {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}" />
+            {% else %}
+                {% if request.POST.next %}
+                    <input type="hidden" name="next" value="{{ request.POST.next }}" />
+                {% endif %}
+            {% endif %}
+            <ul class="loginform">
+                <li>
+                    <label id="label_id_username">Kullanıcı Adı</label>
+                    <input type="text" id="id_username" name="username" class="input" />
+                </li>
+                <li>
+                    <label id="label_id_login-password">Şifre</label>
+                    <input type="password" id="id_login-password" name="password" class="input"/>
+                </li>
+                <li>
+                    <input type="hidden" name="next" value="{{ NEXT }}" />
+                    <input type="submit" value="Giriş" name="enter" class='submit'/>
+                </li>
+            </ul>
+        </form>
+    </div>
+{% endblock %}

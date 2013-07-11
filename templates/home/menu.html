@@ -1,0 +1,9 @@
+{% load tags %}
+{% for menu in top %}
+    <li>
+        <a href="{% url main_view menu.slug %}">{{ menu.title }}</a>
+    </li>
+    <li>
+        |
+    </li>
+{% endfor %}

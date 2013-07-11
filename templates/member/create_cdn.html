@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Kullanıcı Paneli - CDN Oluşturma Formu{% endblock %}
+{% block script %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            if($('#id_is_push').is(':checked')){
+                $('#static_url').addClass('mnone');
+            }
+           $('#id_is_push').click(function(){
+               $('#static_url').toggleClass('mnone');
+           });
+
+        });
+    </script>
+{% endblock %}
+{% block content %}
+   <div class="int" id='form'>
+       <h2 class="h2">CDN Oluşturma Formu</h2>
+       <form id="CdnForm" method="post" action="">
+           {% csrf_token %}
+           <ul>
+               {% include 'div_form.html' %}
+               <li><input type="submit" name='cdnsubmit' class="submit" value="CDN Oluştur"></li>
+           </ul>
+       </form>
+   </div>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}Kullanıcı Paneli - Hesap Düzenleme Formu{% endblock %}
+{% block content %}
+    <div class="int" id='form'>
+        Şifreniz başarı ile değişti.
+    </div>
+{% endblock %}

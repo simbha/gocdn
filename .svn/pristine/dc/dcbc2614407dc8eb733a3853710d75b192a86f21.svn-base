@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Kullanıcı Paneli - CDN Listesi{% endblock %}
+{% block content %}
+    <div class="int" id='form'>
+        <h2 class="h2">CDN Listesi</h2>
+        <table width="100%" cellpadding="5" cellspacing="5">
+        <tr class="head">
+            <th>CDN Tipleri</th>
+            <th>CDN Linki</th>
+            <th>Orijinal web site</th>
+            <th>Cache Expiry</th>
+            <th>Url Signing</th>
+            <th></th>
+        </tr>
+        {% for cdn in cdn_list %}
+            <tr class="{% cycle 'odd' 'even' %}">
+                <td>{{ cdn.cdn_types }}</td>
+                <td>{{ cdn.cdn_urls }}</td>
+                <td>{{ cdn.original_url }}</td>
+                <td>{{ cdn.cache_expiry }}</td>
+                <td>{{ cdn.url_signing }}</td>
+                <td><a href="{% url cdn_edit cdn.id %}">Düzenle</a></td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+{% endblock %}

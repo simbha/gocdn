@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Kullanıcı Paneli - Push Zone Formu{% endblock %}
+{% block content %}
+   <div class="int" id='form'>
+       <h2 class="h2">Push Zone Oluşturma Formu</h2>
+       <form id="CdnForm" method="post" action="">
+           {% csrf_token %}
+           <ul>
+               {% include 'div_form.html' %}
+               <li><input type="submit" name='pushsubmit' class="submit" value="Oluştur"></li>
+           </ul>
+       </form>
+   </div>
+{% endblock %}

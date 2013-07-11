@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Kullanıcı Paneli - Push Zone Listesi{% endblock %}
+{% block content %}
+    <div class="int" id='form'>
+        <h2 class="h2">CDN Listesi</h2>
+        <table width="100%" cellpadding="5" cellspacing="5">
+        <tr class="head">
+            <th>Push Zone</th>
+            <th>PushZone Server</th>
+            <th></th>
+        </tr>
+        {% for push in push_list %}
+            <tr class="{% cycle 'odd' 'even' %}">
+                <td>{{ push.name }}</td>
+                <td>{{ push.server }}</td>
+                <td><a href="{% url push_edit push.id %}">Düzenle</a></td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+{% endblock %}

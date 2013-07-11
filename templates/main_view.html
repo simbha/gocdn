@@ -1,0 +1,78 @@
+{% load tags %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/main.css"/>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/config.js"></script>
+    {% block script %}{% endblock %}
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+</head>
+
+<body>
+<div class="goWrapper">
+    <div class="goTop">
+        <ul>
+
+            <li>
+                <a href="">Bizi Takip Ein</a>
+            </li>
+            <li>
+                |
+            </li>
+            <li>
+                <a href="/panel">Müşteri Paneli </a>
+            </li>
+            <li>
+                |
+            </li>
+            <li>
+                <a href="/">GoStream</a>
+            </li>
+        </ul>
+    </div>
+    <br />
+    <div class="goLogo">
+        <h1>
+            <a href="/"><img src="{{ MEDIA_URL }}images/l.jpg" /></a>
+        </h1>
+    </div>
+    <div class="goMiddle">
+        <ul class="mul">
+            <li>
+                <a href="">İletişim</a>
+            </li>
+            <li>
+                |
+            </li>
+            {% middle_menu %}
+
+        </ul>
+    </div>
+</div>
+<br />
+
+<div class="goContent" style="min-height: 450px;">
+
+    <div class="clear"></div>
+    <h2 class="hview">{{ query.title }}</h2>
+    <p class="abstract">{{ query.abstract }}</p>
+    <p class="content">{{ query.content }}</p>
+
+</div>
+<br />
+
+<div class="clear"></div>
+
+<div class="gFooter">
+</div>
+<div class="clear"></div>
+
+<div class="eFooter">
+    <p>© 2012 GoStream, LLC. All Rights Reserved</p>
+</div>
+</body>
+</html>

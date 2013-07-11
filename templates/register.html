@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Üye Kaydı{% endblock %}
+{% block initial_content %}
+        <h2 class="h2">Üyelik Formu</h2>
+        <form id="registerForm" method="post" action="/go/">
+            {% csrf_token %}
+            <ul>
+                {% include 'base_form.html' %}
+                <li><input type="submit" name='submit' class="submit" value="Üye Ol"></li>
+            </ul>
+        </form>
+{% endblock %}

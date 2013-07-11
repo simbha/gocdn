@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/style.css"/>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/config.js"></script>
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+</head>
+
+<body>
+<div class="wrapper">
+    <div class="header">
+        <h1 class="logo">
+            <a href=""></a>
+        </h1>
+    </div>
+        {#% menu %#}
+    <div class="menu">
+        <ul class="menu">
+            {% if request.user and request.user.is_authenticated %}
+                <li><a href="{% url gostream_logout %}">Çıkış Yap</a></li>
+            {% else %}
+                <li><a href="{% url gostream_login %}">Üye Girişi</a></li>
+                <li><a href="{% url gostream_register %}">Yeni kayıt</a></li>
+            {% endif %}
+
+            <li class='phone'>0212 497 39 52</li>
+        </ul>
+    </div>
+    {% if request.user and request.user.is_authenticated %}
+        {% block content %} {% endblock %}
+    {% else %}
+        {% block initial_content %} {% endblock %}
+    {% endif %}
+    <div class="footer">
+        <ul class="ful">
+            <li class="fh2">Servislerimiz</li>
+            <li><a href="">Canlı Yayın</a></li>
+            <li><a href="">Gelişmiş Admin panel</a></li>
+            <li><a href="">Hızlı Servis</a></li>
+            <li><a href="">Canlı Yayın</a></li>
+            <li><a href="">Gelişmiş Admin panel</a></li>
+            <li><a href="">Hızlı Servis</a></li>
+            <li><a href="">Canlı Yayın</a></li>
+        </ul>
+        <ul class="ful">
+            <li class="fh2">Hakkımızda</li>
+            <li><a href="">Canlı Yayın</a></li>
+            <li><a href="">Gelişmiş Admin panel</a></li>
+            <li><a href="">Hızlı Servis</a></li>
+            <li><a href="">Canlı Yayın</a></li>
+            <li><a href="">Gelişmiş Admin panel</a></li>
+            <li><a href="">Hızlı Servis</a></li>
+            <li><a href="">Canlı Yayın</a></li>
+        </ul>
+        <ul class="ful">
+            <li class="fh2">Servislerimiz</li>
+            <li><a href="">Canlı Yayın</a></li>
+            <li><a href="">Gelişmiş Admin panel</a></li>
+            <li><a href="">Hızlı Servis</a></li>
+            <li><a href="">Canlı Yayın</a></li>
+            <li><a href="">Gelişmiş Admin panel</a></li>
+            <li><a href="">Hızlı Servis</a></li>
+            <li><a href="">Canlı Yayın</a></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

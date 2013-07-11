@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Kullanıcı Paneli{% endblock %}
+
+{% block content %}
+    <div class="user">
+    <h2 class="general">Hesap Yönetimi</h2>
+       <table width="60%" cellpadding="3" cellspacing="3" class="usertable">
+           <tr>
+               <td class="h">Adı Soyadı / Şirket Adı</td>
+               <td class="m">{{ user.get_full_name }}</td>
+           </tr>
+           <tr>
+               <td class="h">Kullanıcı Adı</td>
+               <td class="m">{{ user.username }}</td>
+           </tr>
+           <tr>
+               <td class="h">Email</td>
+               <td class="m">{{ user.email }}</td>
+           </tr>
+           <tr>
+               <td class="h">GSM</td>
+               <td class="m">{{ user.mobile }}</td>
+           </tr>
+           <tr>
+               <td class="h">Tc Kimlik No:</td>
+               <td class="m">{{ user.tc_identity }}</td>
+           </tr>
+       </table>
+    <a href="{% url account_edit %}" class="submit">Düzenle</a>
+    </div>
+
+{% endblock %}

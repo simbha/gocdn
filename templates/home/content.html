@@ -1,0 +1,8 @@
+{% load tags %}
+{% for content in contents %}
+    <div class="goc">
+        <img src="static/{{ content.photo }}" width="293" height="94" />
+        <h2>{{ content.title }}</h2>
+        <p> {{ content.abstract }}<a href="{% url main_view content.slug %}">Devamı »</a></p>
+    </div>
+{% endfor %}

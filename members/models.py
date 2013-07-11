@@ -1,0 +1,131 @@
+#encoding: utf-8
+from django.db import models
+from django.contrib.auth.models import User
+from django.contrib.auth.backends import ModelBackend
+from django.core.exceptions import ImproperlyConfigured
+from django.db.models import get_model
+from django.db.models.aggregates import Sum
+from datetime import datetime
+from django.utils.encoding import smart_str
+from django.utils.encoding import force_unicode
+from django.utils.translation import ugettext as _
+from gocdn import settings
+from gocdn.library.utilities import *
+
+USER_TYPE_CHOICES = (
+    (1, "Free Üye"),
+    (2, "Commercial Üye"),
+    (3, "Firma"),
+    (4, "Yönetici"),
+    )
+
+
+
+
+
+class GoUser(User):
+    user_type = models.PositiveSmallIntegerField(verbose_name=u"Hesap Türü", choices=USER_TYPE_CHOICES, default=1)
+    activation_code = models.CharField(verbose_name=u"Aktivasyon Kodu", max_length=15, null=True, blank=True, default=None, db_index=True)
+    tc_identity = models.CharField(verbose_name=u"T.C. Kimlik Numarası", max_length=11, help_text="", null=True, blank=True, default=None)
+    mobile = models.CharField(verbose_name=u"Cep Telefonu", max_length=16, default=None, null=True, blank=True)
+    last_update = models.DateTimeField(verbose_name=u"Son Güncelleme Tarihi", db_index=True, editable=False, auto_now_add=True)
+    address_1 = models.TextField(verbose_name=u"Adres", null=True, blank=True, default=None)
+    fraud = models.BooleanField(verbose_name=u"Sansür", default=False)
+
+
+    def __unicode__(self):
+        return self.first_name + ' ' + self.last_name
+
+    class Meta:
+        verbose_name=u"GoStream"
+        verbose_name_plural = u"GoStream Kullanıcı Yönetimi"
+        '''app_label = u"Kullanıcılar"
+        db_table = "members_gouser"'''
+
+
+
+    def get_full_name(self):
+        return u"%s %s"%(self.first_name, self.last_name)
+    get_full_name.short_description="Ad Soyad"
+
+    def get_address(self):
+        return u'%s'%(self.address_1)
+
+    #aktivasyon
+    def send_welcome_email(self, password):
+
+        from django.contrib.sites.models import Site
+        from django.core.mail import EmailMessage
+        from django.template.loader import render_to_string
+        current_site = Site.objects.get(id=settings.SITE_ID)
+        subject = u"%s, GoStream'e Hoşgeldiniz!" % current_site.name
+
+        html_content = render_to_string('email/mail_confirmation.html',
+                {'email': self.email, 'password': password, 'current_site': current_site, 'domain': current_site.domain})
+        msg = EmailMessage(subject, html_content, settings.DEFAULT_FROM_EMAIL, [self.email])
+        msg.content_subtype = "html"
+        msg.send()
+
+    def sendActivationMail(self):
+        from django.contrib.sites.models import Site
+        from django.core.mail import EmailMessage
+        from django.template.loader import render_to_string
+        from django.core.urlresolvers import reverse
+        from email.mime.image import MIMEImage
+        from email.mime.multipart import MIMEMultipart
+        from email.mime.text import MIMEText
+
+
+        current_site = Site.objects.get(id=settings.SITE_ID)
+        subject = u"Gostream.com aktivasyon kodunuz"
+        url = reverse('user_activate', kwargs={'actcode':self.activation_code})
+        print url
+        img_content_id = 'mail_confirmation.jpg'
+        #TODO
+        img_data = open('/Users/yasemenkarakoc/netcen/gostream/static/images/mail_confirmation.jpg', 'rb').read()
+        msg = MIMEMultipart(_subtype='related')
+
+        body = 'cid:%s' % img_content_id
+
+        html_content = render_to_string('email/mail_activation.html',
+                {'email': self.email, 'url': url, 'current_site':current_site, 'body':body})
+
+        msg = EmailMessage(subject, html_content, settings.DEFAULT_FROM_EMAIL, [self.email])
+        msg.content_subtype = "html"
+        msg = email_embed_image(msg, img_content_id, img_data)
+        msg.send()
+
+
+
+
+
+class GoUserModelBackend(ModelBackend):
+    def authenticate(self, username=None, password=None, is_admin=True):
+        try:
+            if (is_admin):
+                user = self.user_class.objects.get(username=username)
+            else:
+                user = self.user_class.objects.get(email=username)
+
+
+            if user.check_password(password):
+                return user
+            else:
+                return None
+        except self.user_class.DoesNotExist:
+            settings.process_exception()
+            return None
+
+    def get_user(self, user_id):
+        try:
+            return self.user_class.objects.get(pk=user_id)
+        except self.user_class.DoesNotExist:
+            return None
+
+    @property
+    def user_class(self):
+        if not hasattr(self, '_user_class'):
+            self._user_class = get_model(*settings.CUSTOM_USER_MODEL.rsplit('.', 2))
+            if not self._user_class:
+                raise ImproperlyConfigured('Could not get custom user model')
+        return self._user_class

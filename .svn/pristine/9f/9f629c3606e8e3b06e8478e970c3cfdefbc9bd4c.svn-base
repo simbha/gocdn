@@ -1,0 +1,13 @@
+{% extends "email/mail_template.html" %}
+{% block content %}
+	<strong>Sayın {{ user }},</strong><br/>
+	Sorunuz cevaplanmıştır, görebilmek için alttaki linki tıklayınız:
+	<br/>
+	<a href="http://{{ current_site.domain }}{% url member_answered member_question_id %}">
+		http://{{ current_site.domain }}{% url member_answered member_question_id %}
+	</a>
+	<br/> &nbsp; <br/> &nbsp; <br/>
+	<br/> &nbsp; <br/> &nbsp; <br/>
+	<a href="http://{{ current_site.domain }}">{{ current_site.name }}</a>
+	<br/> &nbsp; <br/> &nbsp; <br/>
+{% endblock %}

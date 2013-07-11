@@ -1,0 +1,15 @@
+{% extends "email/mail_template.html" %}
+{% block content %}
+	<strong><big>Sayin {{ user.get_full_name }},</big></strong><br/>
+	<br/> &nbsp; <br/> &nbsp; <br/>
+	Hesabınızı aktif hale getirebilmek için alttaki linki tıklayın:
+	<br/>
+	<a href="http://{{ current_site.domain }}{% url member_activation activation_code %}">
+		http://{{ current_site.domain }}{% url member_activation activation_code %}
+	</a>
+	<br/> &nbsp; <br/> &nbsp; <br/>
+	<br/> &nbsp; <br/> &nbsp; <br/>
+	
+	<a href="http://{{ current_site.domain }}">{{ current_site.name }}</a>
+	<br/> &nbsp; <br/> &nbsp; <br/>
+{% endblock %}

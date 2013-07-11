@@ -1,0 +1,100 @@
+{% load tags %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/style.css"/>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/config.js"></script>
+    {% block script %}{% endblock %}
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+</head>
+
+<body>
+
+<div class="wrapper">
+    <div class="header">
+        <h1 class="logo">
+            <a href=""></a>
+        </h1>
+        <div class="fright">
+            <ul class="menu">
+                {% if request.user and request.user.is_authenticated %}
+                    <li><a href="{% url gostream_logout %}">Çıkış Yap</a></li>
+                {% else %}
+                    <li><a href="{% url gostream_login %}">Üye Girişi</a></li>
+                    <li><a href="{% url gostream_register %}">Yeni kayıt</a></li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+    {#% menu %#}
+
+    {% if request.user and request.user.is_authenticated %}
+        <div class="int-wrapper">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% block left %}
+            <div class="left">
+                <h2 class="cdnh2">CDN İşlemleri</h2>
+                <ul class="cdn">
+                    <li><a href="{% url create_cdn %}" class="{% current request 'create_cdn' %}">CDN Oluşturma</a></li>
+                    <li><a href="{% url cdn_list %}" class="{% current request 'cdn_list' %}">CDN Listesi{{ request.get }}</a></li>
+                </ul>
+                <h2 class="cdnh2">PushZone İşlemleri</h2>
+                <ul class="cdn">
+                    <li><a href="{% url create_pushzone %}" class="{% current request 'create_pushzone' %}">PushZone Oluşturma</a></li>
+                    <li><a href="{% url push_list %}" class="{% current request 'push_list' %}">PushZone Listesi{{ request.get }}</a></li>
+                </ul>
+
+                <h2 class="cdnh2">Hesap Yonetimi</h2>
+                <ul class="cdn">
+                    <li><a href="{% url member_area %}" class="{% current request 'member_area' %}">Hesap Düzenle</a></li>
+                    <li><a href="{% url password_change %}" class="{% current request 'password_change' %}">Şifre Değiştirme</a></li>
+                </ul>
+                <h2 class="cdnh2">Destek</h2>
+                <ul class="cdn">
+                    <li><a href="{% url help_desk %}" class="{% current request 'help_desk' %}">Mesaj Gönder</a></li>
+                    <li><a href="{% url help_list %}" class="{% current request 'help_list' %}">Mesaj Listesi</a></li>
+                </ul>
+                <h2 class="cdnh2">Fiyatlar</h2>
+                <ul class="cdn">
+                    <li><a href="{% url pricing %}" class="{% current request 'pricing' %}">Fiyatlar</a></li>
+                </ul>
+                <h2 class="cdnh2">SSS</h2>
+                <ul class="cdn">
+                    <li><a href="{% url faq_list %}" class="{% current request 'faq_list' %}">Sıkça Sorulan Sorular</a></li>
+                </ul>
+            </div>
+        {% endblock %}
+         {% block content %}
+         {% endblock %}
+    {% else %}
+        {% block initial_content %} {% endblock %}
+    {% endif %}
+    </div>
+
+</div>
+<div class="footer">
+
+    {% if request.user and request.user.is_authenticated %}
+        <a href="/" class="fa">Dashboard</a>
+        <a href="{% url gostream_logout %}" class="fa">Çıkış Yap</a>
+    {% else %}
+        <a href="{% url gostream_login %}">Üye Girişi</a>
+        <a href="{% url gostream_register %}">Yeni kayıt</a>
+    {% endif %}
+    <br>
+    <br>
+    ©2010 Netcen A.Ş. Bütün hakları saklıdır.
+</div>
+</body>
+</html>

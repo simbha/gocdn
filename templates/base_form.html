@@ -1,0 +1,16 @@
+{% load i18n %}
+{% for field in form %}
+        <li>
+            <p class={{ field.name }}>
+                {{ field.label_tag }}:
+                {% if field.field.required %}<span style="color:#CC0000;">*</span>{% endif %}
+            </p>
+            <span class='{{ field.name }}'>{{ field }}</span>
+            {% if field.errors %}
+                <p class="field_error">{{ field.errors }}</p>
+            {% endif %}
+            {% if field.help_text %}
+                <div class="help">{{ field.help_text|safe }}</div>
+            {% endif %}
+        </li>
+{% endfor %}

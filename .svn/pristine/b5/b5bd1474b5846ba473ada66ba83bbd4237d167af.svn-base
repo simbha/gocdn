@@ -1,0 +1,69 @@
+# -*- coding: utf-8 -*-
+import datetime
+from south.db import db
+from south.v2 import SchemaMigration
+from django.db import models
+
+
+class Migration(SchemaMigration):
+
+    def forwards(self, orm):
+        # Removing unique constraint on 'Country', fields ['country']
+        db.delete_unique('product_country', ['country'])
+
+
+    def backwards(self, orm):
+        # Adding unique constraint on 'Country', fields ['country']
+        db.create_unique('product_country', ['country'])
+
+
+    models = {
+        'product.country': {
+            'Meta': {'object_name': 'Country'},
+            'country': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'country_order': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+        },
+        'product.pricing': {
+            'Meta': {'object_name': 'Pricing'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'price_per_gb': ('django.db.models.fields.DecimalField', [], {'max_digits': '9', 'decimal_places': '2'}),
+            'price_per_tb': ('django.db.models.fields.DecimalField', [], {'max_digits': '9', 'decimal_places': '2'}),
+            'pricing_country': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'related_name': "'pricing_country'", 'to': "orm['product.Country']"})
+        },
+        'product.product': {
+            'Meta': {'ordering': "['-created_at']", 'object_name': 'Product', 'db_table': "'products'"},
+            'brand': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'categories': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['product.ProductCategory']", 'symmetrical': 'False'}),
+            'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'image': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'is_bestseller': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'is_featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'meta_description': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'meta_keywords': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
+            'old_price': ('django.db.models.fields.DecimalField', [], {'default': '0.0', 'max_digits': '9', 'decimal_places': '2', 'blank': 'True'}),
+            'price': ('django.db.models.fields.DecimalField', [], {'max_digits': '9', 'decimal_places': '2'}),
+            'quantity': ('django.db.models.fields.IntegerField', [], {}),
+            'sku': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '255'}),
+            'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
+        },
+        'product.productcategory': {
+            'Meta': {'ordering': "['-created_at']", 'object_name': 'ProductCategory', 'db_table': "'categories'"},
+            'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'meta_description': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'meta_keywords': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'}),
+            'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
+        }
+    }
+
+    complete_apps = ['product']

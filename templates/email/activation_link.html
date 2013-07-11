@@ -1,0 +1,9 @@
+{% extends "email/mail_template.html" %}
+{% block content %}
+	<a href="http://{{ current_site.domain }}{{ url }}">
+		http://{{ current_site.domain }}{{ url }}
+	</a>
+	<br/> &nbsp; <br/> &nbsp; <br/>
+	<br/> &nbsp; <br/> &nbsp; <br/>
+
+{% endblock %}

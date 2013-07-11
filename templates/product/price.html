@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}CDN Fiyatları{% endblock %}
+{% block content %}
+    <div class="middle">
+        <h2 class="general">CDN Fiyatları</h2>
+        <table class="usertable" width="100%" cellpadding="3" cellspacing="3">
+            <tr>
+                <td class="h">Ülke</td>
+                <td class="h">Gigabyte Fiyatı</td>
+                <td class="h">Terabyte Fiyatı</td>
+            </tr>
+            {% for p in price %}
+                <tr>
+                    <td class="m">{{ p.pricing_country }}</td>
+                    <td class="m">{{ p.price_per_gb }} {{ p.exchange_type }}</td>
+                    <td class="m">{{ p.price_per_tb }} {{ p.exchange_type }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

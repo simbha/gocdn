@@ -1,0 +1,53 @@
+#encoding: utf-8
+import os
+PROJECT_DIR = os.path.dirname(__file__)
+
+ADMINS = (
+    ('Yasemen KARAKOC', 'yasemenkarakoc@gmail.com'),
+    )
+
+SESSION_ENGINE= 'django.contrib.sessions.backends.cached_db'
+TEMPLATE_DIRS = (os.path.join(PROJECT_DIR, 'templates/'),)
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'static/')
+#CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+'''CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}'''
+DEFAULT_FROM_EMAIL = 'Gostream <noreply@Gostream.com>'
+
+
+
+DEBUG = True
+
+DATABASE_ENGINE = "mysql"
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'gocdn',
+        'USER': 'root',
+        'PASSWORD': 'Sam1655sam',
+        'HOST': 'localhost',
+        'PORT': '3360',
+        },
+
+
+
+}
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = '/tmp/app-messages' # change this to a proper location
+
+
+DEBUG_TOOLBAR_PANELS = (
+    'debug_toolbar.panels.version.VersionDebugPanel',
+    'debug_toolbar.panels.timer.TimerDebugPanel',
+    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
+    'debug_toolbar.panels.headers.HeaderDebugPanel',
+    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
+    'debug_toolbar.panels.template.TemplateDebugPanel',
+    'debug_toolbar.panels.sql.SQLDebugPanel',
+    'debug_toolbar.panels.signals.SignalDebugPanel',
+    'debug_toolbar.panels.logger.LoggingPanel',
+    )
